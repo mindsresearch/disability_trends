@@ -1,0 +1,38 @@
+\documentclass[letterpaper, twoside]{article}
+
+\usepackage{biblatex}
+\addbibresource{proposal.bib}
+
+\usepackage{hyperref}
+
+\title{CSCI 404: Final Project Proposal}
+\author{Noah Duggan Erickson \and Raghav Vivek \and Brady Deyak}
+\date{21 May 2024}
+
+\begin{document}
+\maketitle
+
+\section*{Faculty Acknowledgements}
+We plan on working closely with \href{https://chss.wwu.edu/chmielk}{Dr. Kristen Chmielewski} and other \href{https://wp.wwu.edu/disabilitycollaborative/people/}{WWU ICDS\footnote{Institute for Critical Disability Studies} faculty} both in the development and execution of this project.
+
+\section{Problem Statement}
+In this project, we aim to use an assortment of NLP techniques to analyze the frequencies, contexts, and sentiments of various disability-related topics over time. The headline example of this inquiry is to investigate the shifts in terminology from "handicapped" to "disabled" to "differently abled" and so on. We will then use these analyses to identify the contexts in which these terms are used, the sentiments associated with them, and the impact of these terms on the disabled community. We will also investigate the impact of the Americans with Disabilities Act (ADA) on the frequency and sentiment of disability-related topics in the media.
+\section{Impact}
+Prior to the adoption of the ADA, there was a significant amount of pushback from transportation companies such as Greyhound \cite{grey-ada}. This project aims to identify other similar connections.
+\section{Learning Goals}
+Due to the inquiry-heavy nature of this proposal, there is a certain amount of "the journey is the destination" in this project.
+\section{Data Set} \label{sec:data}
+The dataset for this project will be a large collection of news sources and other media, such as newspaper articles, press releases, and transcripts of radio and television broadcasts. This data will be acquired via a massive scraping operation to extract plaintext from NexisUni's batch-export of rtf files using broad search terms related to the terms of interest (e.g. \texttt{disab*} for "disabled," "disability," "disabilities," etc.).
+\section{Methodology}
+Following the acquisition of data as described in Section \ref{sec:data} and subsequent cleaning and preprocessing operations, we intend to use a variety of NLP techniques to create our analyses. The major components of this analysis will be (but not limited to) the following:
+
+\begin{enumerate}
+    \item \textbf{Word Embeddings: }We will use a tool such as Word2Vec or FastText to create word embeddings for the terms of interest. This will allow us to analyze the contexts in which these terms are used. Furthermore, by splitting the data into time periods, we can analyze how these contexts change over time by measuring the cosine similarities between relevant terms over time.
+    \item \textbf{Common Theme Clustering: }We will use a clustering algorithm such as K-Means to identify common themes in the data. This will allow us to identify the contexts in which the terms of interest are used and how these contexts change over time. We then plan to assign labels to these clusters in order to better illustrate these themes.
+    \item \textbf{Sentiment Analysis: }We will use a sentiment analysis tool such as VADER to analyze the sentiment of the terms of interest. This will allow us to identify the sentiment associated with these terms and how it changes over time. We will also investigate the impact of the ADA on the sentiment of disability-related topics.
+\end{enumerate}
+\section{Evaluation}
+\newpage
+\printbibliography
+
+\end{document}
