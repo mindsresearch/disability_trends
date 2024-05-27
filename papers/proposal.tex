@@ -16,22 +16,24 @@
 We plan on working closely with \href{https://chss.wwu.edu/chmielk}{Dr. Kristen Chmielewski} and other \href{https://wp.wwu.edu/disabilitycollaborative/people/}{WWU ICDS\footnote{Institute for Critical Disability Studies} faculty} both in the development and execution of this project.
 
 \section{Problem Statement}
-In this project, we aim to use an assortment of NLP techniques to analyze the frequencies, contexts, and sentiments of various disability-related topics over time. The headline example of this inquiry is to investigate the shifts in terminology from "handicapped" to "disabled" to "differently abled" and so on. We will then use these analyses to identify the contexts in which these terms are used, the sentiments associated with them, and the impact of these terms on the disabled community. We will also investigate the impact of the Americans with Disabilities Act (ADA) on the frequency and sentiment of disability-related topics in the media.
-\section{Impact}
-Prior to the adoption of the ADA, there was a significant amount of pushback from transportation companies such as Greyhound \cite{grey-ada}. This project aims to identify other similar connections.
+In this project, we aim to use an assortment of NLP techniques to analyze the frequencies, contexts, and sentiments of various disability-related terms over time. The primary focus of this inquiry is to investigate the shifts in terminology from "handicapped" to "disabled" to "differently abled" and so on. We will then use these analyses to identify the contexts in which these terms are used, the sentiments associated with them, and the impact of these terms on the disabled community.
+\section{Ethical and Social Impact}
+Understanding the evolution of language used to describe disabilities is crucial for promoting inclusive and respectful communication. This project aims to investigate the impact of major events, such as the adoption of the ADA \cite{grey-ada}, on the usage and sentiment of disability-related terms. By analyzing these terms' contexts and sentiments, we hope to gain a better understanding of the social and ethical implications of these terms.
 \section{Learning Goals}
-Due to the inquiry-heavy nature of this proposal, there is a certain amount of "the journey is the destination" in this project.
+Due to the inquiry-heavy nature of this proposal, there is a certain amount of "the journey is the destination" in this project. For example, while in some cases a word embedding model may be considered as only a part of a larger NLP pipeline, in this case, the word embeddings themselves are a significant part of the analysis through the usage of tools such as LIME \cite{lime} to interpret the model's decisions.
 \section{Data Set} \label{sec:data}
 The dataset for this project will be a large collection of news sources and other media, such as newspaper articles, press releases, and transcripts of radio and television broadcasts. This data will be acquired via a massive scraping operation to extract plaintext from NexisUni's batch-export of rtf files using broad search terms related to the terms of interest (e.g. \texttt{disab*} for "disabled," "disability," "disabilities," etc.).
-\section{Methodology}
+\section{Technical Approach} \label{sec:tech}
 Following the acquisition of data as described in Section \ref{sec:data} and subsequent cleaning and preprocessing operations, we intend to use a variety of NLP techniques to create our analyses. The major components of this analysis will be (but not limited to) the following:
 
 \begin{enumerate}
     \item \textbf{Word Embeddings: }We will use a tool such as Word2Vec or FastText to create word embeddings for the terms of interest. This will allow us to analyze the contexts in which these terms are used. Furthermore, by splitting the data into time periods, we can analyze how these contexts change over time by measuring the cosine similarities between relevant terms over time.
     \item \textbf{Common Theme Clustering: }We will use a clustering algorithm such as K-Means to identify common themes in the data. This will allow us to identify the contexts in which the terms of interest are used and how these contexts change over time. We then plan to assign labels to these clusters in order to better illustrate these themes.
     \item \textbf{Sentiment Analysis: }We will use a sentiment analysis tool such as VADER to analyze the sentiment of the terms of interest. This will allow us to identify the sentiment associated with these terms and how it changes over time. We will also investigate the impact of the ADA on the sentiment of disability-related topics.
+    \item \textbf{Cloud Computing: }Due to the ambitious nature of the analyses described in this proposal, we plan to employ cloud/distributed computing resources such as Azure or AWS to facilitate the model training process. 
 \end{enumerate}
 \section{Evaluation}
+Each component listed in section \ref{sec:tech} will be independently evaluated using a variety of appropriate metrics. However, due to the scale of the data and the time constraints, a fully supervised evaluation may not be feasible. In this case, we will use unsupervised evaluation techniques such as silhouette scores and coherence scores to evaluate the quality of the clusters and embeddings. Furthermore, we will use qualitative evaluation techniques such as LIME \cite{lime} and Alibi \cite{alibi} to interpret the decisions of the models.
 \newpage
 \printbibliography
 
