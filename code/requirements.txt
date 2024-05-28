@@ -1,0 +1,15 @@
+### GENERAL ###
+pyarrow
+pandas
+numpy
+pillow
+
+### RTF PARSING ###
+striprtf
+tqdm
+
+### DATAVIS ###
+matplotlib
+seaborn
+plotly
+wordcloud
