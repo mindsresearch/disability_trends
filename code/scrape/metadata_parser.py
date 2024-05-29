@@ -1,13 +1,17 @@
 import json
 from pathlib import Path
 
+from token_cleaning import clean_text
+
 
 def proc_meta(meta: list) -> dict:
     temp = [x.split(':\xa0') for x in meta]
-    temp_meta = {'title': temp[0][0], 'service': temp[1][0], 'pubdate': temp[2][0]}
+    temp_meta = {'title': clean_text(temp[0][0]),
+                 'service': temp[1][0],
+                 'pubdate': clean_text(temp[2][0])}
     for t in temp:
         if len(t) == 2:
-            temp_meta[t[0].lower()] = t[1]
+            temp_meta[t[0].lower()] = clean_text(t[1])
     return temp_meta
 
 
