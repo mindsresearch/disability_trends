@@ -1,0 +1,38 @@
+\documentclass[letterpaper, twoside, draft]{article}
+
+\title{Disability Trends NLP Project Progress}
+\author{Noah Duggan Erickson \and Raghav Vivek \and Brady Deyak}
+\date{04 June 2024}
+
+\begin{document}
+\maketitle
+
+\section{Noah's Progress}
+\subsection{Accomplishments}
+\begin{itemize}
+    \item \textbf{Data Acquisition}: Current document count: 3300
+    \item \textbf{Preprocessing}: Built basic script to convert rtf to standardized JSON. Experimented with \texttt{nltk} WordNet lemmatizer and Porter stemmer.
+    \item \textbf{Word Embeddings}: Ducttaped \texttt{gensim} FastText model following an unreflected SciPy depreciation.
+    \item \textbf{Data Vis \& Analysis}: Modified TSNE embedding visualization code from A4, began looking into data more deeply.
+\end{itemize}
+\subsection{Tasklist}
+\begin{itemize}
+    \item \textbf{Data Acquisition}: Continue to scrape and convert documents. Potentially increase corpora to 1000 docs/term/decade (currently 500) if Nexis ratelimits allow.
+    \item \textbf{Preprocessing}: Continue to refine preprocessing pipeline, specifically lemmatization (and adjacent).
+    \item \textbf{Data Vis \& Analysis}: Continue refining TSNE embedding visualization, finish WordCloud visuals, continue deeper analysis, build connections between points (network-like?).
+    \item \textbf{Deliverables}: Enhance plan for report, refine data vis for presentation.
+\end{itemize}
+\subsection{Challenges}
+\begin{itemize}
+    \item \textbf{Preprocessing}: Lemmatization 2020 SoTA\footnote{arXiv:2003.07082v2 [cs.CL] 23 Apr 2020} neural seq2seq (pg. 3) insufficient. Considering falling back to regex. 2018 BRNN SoTA\footnote{arXiv:1808.03703v2 [cs.CL] 27 Aug 2018} untested.
+    \item \textbf{Being a Student}: Learning in-situ. \textit{So many manpages\dots}
+\end{itemize}
+\section{Raghav's Progress}
+\subsection{Accomplishments}
+\subsection{Tasklist}
+\subsection{Challenges}
+\section{Brady's Progress}
+\subsection{Accomplishments}
+\subsection{Tasklist}
+\subsection{Challenges}
+\end{document}
