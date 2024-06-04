@@ -6,22 +6,35 @@ from tqdm import tqdm
 import nltk
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
 # TODO: Experiment with stemmers
 
-nltk.download('punkt')
 nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('wordnet')
+
+
+def lemma_warn():
+    lemmatizer = WordNetLemmatizer()
+    print('====== WARNING ======')
+    print('You are using a lemmatized version of your text!')
+    print('Here is a cheat sheet for what terms to use:')
+    cheat_terms = ['disabled', 'disability', 'neurodivergent', 'autistic', 'autism', 'handicapped', 'golf', 'sports']
+    for term in cheat_terms:
+        print(f'  {term}: {lemmatizer.lemmatize(term)}')
+    print('=====================')
 
 
 def clean_text(text: str) -> list:
     # Tokenize words, remove punctuation and stopwords, and stem words
     stop_words = set(stopwords.words('english'))
-    # stemmer = PorterStemmer()
+    lemmatizer = WordNetLemmatizer()
 
     words = word_tokenize(text)
-    cleaned_words = [word for word in words if word.isalnum() and word.lower() not in stop_words]
+    cleaned_words = [word.lower() for word in words if word.isalnum() and word.lower() not in stop_words]
+    lemmatized_words = [lemmatizer.lemmatize(word) for word in cleaned_words]
 
-    return cleaned_words
+    return lemmatized_words
 
 
 def clean_text_sent(text: str) -> list:
@@ -30,12 +43,12 @@ def clean_text_sent(text: str) -> list:
 
     # Tokenize words, remove punctuation and stopwords, and stem words
     stop_words = set(stopwords.words('english'))
-    stemmer = PorterStemmer()
+    lemmatizer = WordNetLemmatizer()
     cleaned_text = []
 
     for sentence in sentences:
         words = word_tokenize(sentence)
-        cleaned_words = [stemmer.stem(word) for word in words if word.isalnum() and word.lower() not in stop_words]
+        cleaned_words = [lemmatizer.lemmatize(word.lower()) for word in words if word.isalnum() and word.lower() not in stop_words]
         cleaned_text.append(cleaned_words)
 
     return cleaned_text

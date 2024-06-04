@@ -7,7 +7,7 @@ from striprtf.striprtf import rtf_to_text
 from tqdm import tqdm
 
 from metadata_parser import proc_meta
-from token_cleaning import clean_text
+from token_cleaning import clean_text, lemma_warn
 
 
 def proc_rtf(path: Path) -> dict:
@@ -33,6 +33,7 @@ if __name__ == '__main__':
     term = args.term
     decade = args.decade
     nums = args.nums
+    lemma_warn()
     for num in nums:
         name = f'{decade}s-{num}{term[0]}'
         print(name)

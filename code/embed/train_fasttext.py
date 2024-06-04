@@ -15,7 +15,7 @@ from gensim.models import FastText
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--term', default='disab', type=str)
 parser.add_argument('-d', '--decade', type=str, required=True)
-args = parser.parse_args(['-d', '2020'])
+args = parser.parse_args(['-t', 'handicap', '-d', '1990'])
 term = args.term
 decade = args.decade
 json_paths = list(Path(f'/run/media/noah/TOSHIBA EXT/disab_trends_corp/{term}/{decade}s/json').glob('*.json'))
@@ -37,7 +37,7 @@ model.save(f'/run/media/noah/TOSHIBA EXT/disab_trends_corp/{term}/{decade}s/fast
 # Example usage
 #
 # s = PorterStemmer()
-keys = ['disability', 'neurodiversity', 'autism']
+keys = ['disability']
 for k in keys:
     # k = s.stem(k)
     word_vector = model.wv[k]
