@@ -1,0 +1,19 @@
+
+#########################
+### DISABILITY TRENDS ###
+###  MACHINE LEARNING ###
+###   DEPENDENCIES    ###
+#########################
+
+# MODELLING
+#
+tensorflow
+# gensim
+
+# NLP
+#
+nltk
+
+# INTERPRETING
+#
+alibi

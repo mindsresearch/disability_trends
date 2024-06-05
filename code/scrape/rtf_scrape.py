@@ -10,7 +10,7 @@ from metadata_parser import proc_meta
 from token_cleaning import clean_text, lemma_warn
 
 
-def proc_rtf(path: Path) -> dict:
+def proc_rtf(path: Path, lemma: bool = True) -> dict:
     with open(path, 'r') as in_file:
         txt = rtf_to_text(in_file.read())
 
@@ -21,7 +21,15 @@ def proc_rtf(path: Path) -> dict:
 
     meta_lines = [line for line in meta.splitlines() if line != ' ']
 
-    return {'meta': proc_meta(meta_lines), 'body': clean_text(body)}
+    return {'meta': proc_meta(meta_lines), 'body': clean_text(body, lemma)}
+
+
+def check_data_path(path: Path) -> None:
+    if not path.exists():
+        raise FileNotFoundError(f'Path {path} does not exist')
+    rtfs = [f for f in path.rglob('*.rtf') if '_doclist' not in f.name]
+    if len(rtfs) == 0:
+        raise FileNotFoundError(f'Path {path} does not contain any .rtf files')
 
 
 if __name__ == '__main__':
@@ -29,22 +37,30 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--term', default='disab', type=str)
     parser.add_argument('-d', '--decade', type=str, required=True)
     parser.add_argument('-n', '--nums', type=str, required=True, nargs='+')
+    parser.add_argument('-l', '--no_lemma', action='store_false', help="Don't do lemmatization", dest='lemma')
     args = parser.parse_args()
+
     term = args.term
     decade = args.decade
     nums = args.nums
-    lemma_warn()
-    for num in nums:
+    lemma = args.lemma
+
+    if lemma:
+        lemma_warn()
+
+    script_loc = Path(__file__).resolve()
+    data_path = script_loc.parent.parent/'data'
+    check_data_path(data_path)
+    out_path = data_path / term / f'{decade}s' / 'json'
+    out_path.mkdir(exist_ok=True)
+
+    for num in tqdm(nums, desc='processing batches'):
         name = f'{decade}s-{num}{term[0]}'
-        print(name)
-        root_path = Path(f'/run/media/noah/TOSHIBA EXT/disab_trends_corp/{term}/{decade}s/{name}')
+        root_path = data_path / term / f'{decade}s' / name
         rtf_files = [f for f in root_path.rglob('*.rtf') if '_doclist' not in f.name]
-        print(f'Found {len(rtf_files)} rtfs')
 
-        data = [proc_rtf(p) for p in tqdm(rtf_files)]
+        data = [proc_rtf(p, lemma) for p in tqdm(rtf_files, leave=False, desc='processing rtfs')]
 
-        out_path = Path(f'/run/media/noah/TOSHIBA EXT/disab_trends_corp/{term}/{decade}s/json')
-        out_path /= f'{name}.json'
-        with open(out_path, 'w') as out_file:
+        with open(out_path / f'{name}.json', 'w') as out_file:
             json.dump(data, out_file, indent=2)
-            print(f'Wrote to {out_path}')
+    print(f'Wrote {len(nums)} jsons to {out_path}')

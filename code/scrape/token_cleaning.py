@@ -25,16 +25,17 @@ def lemma_warn():
     print('=====================')
 
 
-def clean_text(text: str) -> list:
+def clean_text(text: str, lemma: bool = True) -> list:
     # Tokenize words, remove punctuation and stopwords, and stem words
     stop_words = set(stopwords.words('english'))
     lemmatizer = WordNetLemmatizer()
 
     words = word_tokenize(text)
     cleaned_words = [word.lower() for word in words if word.isalnum() and word.lower() not in stop_words]
-    lemmatized_words = [lemmatizer.lemmatize(word) for word in cleaned_words]
-
-    return lemmatized_words
+    if lemma:
+        lemmatized_words = [lemmatizer.lemmatize(word) for word in cleaned_words]
+        return lemmatized_words
+    return cleaned_words
 
 
 def clean_text_sent(text: str) -> list:
