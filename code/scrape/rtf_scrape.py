@@ -10,7 +10,7 @@ from metadata_parser import proc_meta
 from token_cleaning import clean_text, lemma_warn
 
 
-def proc_rtf(path: Path, lemma: bool = True) -> dict:
+def proc_rtf(path: Path, lemma: bool = True, token: bool = True) -> dict:
     with open(path, 'r') as in_file:
         txt = rtf_to_text(in_file.read())
 
@@ -21,7 +21,7 @@ def proc_rtf(path: Path, lemma: bool = True) -> dict:
 
     meta_lines = [line for line in meta.splitlines() if line != ' ']
 
-    return {'meta': proc_meta(meta_lines), 'body': clean_text(body, lemma)}
+    return {'meta': proc_meta(meta_lines), 'body': (clean_text(body, lemma) if token else body)}
 
 
 def check_data_path(path: Path) -> None:
@@ -38,15 +38,19 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--decade', type=str, required=True)
     parser.add_argument('-n', '--nums', type=str, required=True, nargs='+')
     parser.add_argument('-l', '--no_lemma', action='store_false', help="Don't do lemmatization", dest='lemma')
+    parser.add_argument('-k', '--no_token', action='store_false', help="Don't do tokenization", dest='token')
     args = parser.parse_args()
 
     term = args.term
     decade = args.decade
     nums = args.nums
-    lemma = args.lemma
+    _lemma = args.lemma
+    _token = args.token
 
-    if lemma:
+    if _lemma:
         lemma_warn()
+    if not _token:
+        print('WARNING: Skipping tokenization')
 
     script_loc = Path(__file__).resolve()
     data_path = script_loc.parent.parent/'data'
@@ -59,7 +63,7 @@ if __name__ == '__main__':
         root_path = data_path / term / f'{decade}s' / name
         rtf_files = [f for f in root_path.rglob('*.rtf') if '_doclist' not in f.name]
 
-        data = [proc_rtf(p, lemma) for p in tqdm(rtf_files, leave=False, desc='processing rtfs')]
+        data = [proc_rtf(p, _lemma, _token) for p in tqdm(rtf_files, leave=False, desc='processing rtfs')]
 
         with open(out_path / f'{name}.json', 'w') as out_file:
             json.dump(data, out_file, indent=2)
