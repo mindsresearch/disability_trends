@@ -15,10 +15,14 @@ from gensim.models import FastText
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--term', default='disab', type=str)
 parser.add_argument('-d', '--decade', type=str, required=True)
-args = parser.parse_args(['-t', 'handicap', '-d', '1990'])
+args = parser.parse_args(['-t', 'handicap', '-d', '2020'])
 term = args.term
 decade = args.decade
-json_paths = list(Path(f'/run/media/noah/TOSHIBA EXT/disab_trends_corp/{term}/{decade}s/json').glob('*.json'))
+# json_paths = list(Path(f'/run/media/noah/TOSHIBA EXT/disab_trends_corp/{term}/{decade}s/json').glob('*.json'))
+script_loc = Path(__file__).resolve()
+data_path = script_loc.parent.parent/'data'
+json_path = data_path / term / f'{decade}s' / 'json'
+json_paths = list(json_path.rglob('*.json'))
 print(f'Found {len(json_paths)} json files')
 
 bodies = []
@@ -32,7 +36,7 @@ print('training model...')
 model = FastText(sentences=bodies, vector_size=100, window=5, min_count=1, epochs=10)
 
 print('saving model...')
-model.save(f'/run/media/noah/TOSHIBA EXT/disab_trends_corp/{term}/{decade}s/fasttext_model.bin')
+model.save(str(json_path/'fasttext_model.bin'))
 
 # Example usage
 #
