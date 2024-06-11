@@ -1,8 +1,12 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt,a4paper, twocolumn]{article}
 
-\usepackage[hyperref]{acl2020}
+\usepackage{acl2020}
+
 \usepackage{times}
 \usepackage{latexsym}
+
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
 
 \renewcommand{\UrlFont}{\ttfamily\small}
 
@@ -11,7 +15,7 @@
 % and will typically save some space.
 \usepackage{microtype}
 
-% \aclfinalcopy % Uncomment this line for the final submission
+\aclfinalcopy % Uncomment this line for the final submission
 %\def\aclpaperid{***} %  Enter the acl Paper ID here
 
 %\setlength\titlebox{5cm}
@@ -56,18 +60,22 @@ Intro text goes here.
 Related work goes here.
 
 \section{Our Approach}
-Despite the highly multidisciplinary nature of the project, the present work is primarily focused on the natural language processing aspect. The project was divided into three main parts: data acquisition and pre-processing, word vectorization, and sentiment analysis. The data acquisition and pre-processing part of the project involved scraping a large number of news articles from Nexis Uni, converting them to plaintext, and then lemmatizing the text. The word vectorization part of the project involved training a FastText model on the lemmatized text and then visualizing the results. The sentiment analysis part of the project involved training a sentiment analysis model on the lemmatized text and then interpreting the results. The project was conducted using Python and multiple libraries, including \texttt{Stanza}, \texttt{Gensim}, \texttt{TensorFlow}, and \texttt{Alibi}.
+Despite the highly multidisciplinary nature of the project, the present work is primarily focused on the natural language processing aspect. The project was divided into three main parts: data acquisition and pre-processing, word vectorization, and sentiment analysis. The data acquisition and pre-processing part of the project involved scraping a large number of news articles from Nexis Uni, converting them to plaintext, and then lemmatizing the text. The word vectorization part of the project involved training a FastText model on the lemmatized text and then visualizing the results. The sentiment analysis part of the project involved training a sentiment analysis model on the lemmatized text and then interpreting the results. The project was conducted using Python and multiple libraries, including \texttt{Stanza}~\citep{stanza}, \texttt{Gensim}~\citep{gensim}, \texttt{TensorFlow}~\citep{tensorflow}, and \texttt{Alibi}~\citep{alibi}.
 
 \section{Experiments}
 There were multiple experiments run throughout the project. These include a massive scraping operation with subsequently large-scale data pre-processing, a word vectorization model, and an interpretable sentiment analysis model.
 
 \subsection{Data Sources}
 
-The data for this project was acquired using the export feature of Nexis Uni. Using this feature, a large number of news articles were downloaded as rtf files. These were then converted to plaintext using the \texttt{rtf to txt} Python library. Each article's content was then preprocessed using the lemmatization pipeline in the \texttt{Stanza} library. This pipeline tokenizes the text, removes stopwords, and lemmatizes the remaining words using a neural seq2seq model. The resulting data was then stored as a list and exported to JSON alongside article metadata.
+The data for this project was acquired using the export feature of Nexis Uni. Using this feature, a large number of news articles were downloaded as rtf files. These were then converted to plaintext using the \texttt{striprtf}~\citep{striprtf} Python library. Each article's content was then preprocessed using the lemmatization pipeline in the \texttt{Stanza}~\citep{stanza} library. This pipeline tokenizes the text, removes stopwords, and lemmatizes the remaining words using a neural seq2seq model. The resulting data was then stored as a list and exported to JSON alongside article metadata.
 
 \subsection{Word Vectorization}
 
 The word vectorization model used was the FastText model from the \texttt{Gensim} library. After training the model on the preprocessed data from a given decade, the model was used to generate a list of the most similar words to a list of selected words. The results were then visualized using a t-SNE plot. The t-SNE plot was generated using the \texttt{Plotly} library.
+
+\subsection{Word Cloud}
+
+Another such visual representation of the data after pre-processing was a word cloud generated using the \texttt{WordCloud} library and \texttt{matplotlib}. The word cloud was then generated using word frequencies to set the size of each word.
 
 \subsection{Sentiment Analysis}
 \textbf{BRADY}: In this section, discuss the sentiment analysis model. Include the model architecture, training data, and training results. For example, ``TensorFlow was used to train a sentiment analysis model similar to the one proposed in this paper. It uses an RNN trained on this dataset, and achives an average accuracy of $x$\%.''
@@ -79,26 +87,48 @@ The word vectorization model used was the FastText model from the \texttt{Gensim
 Multiple visualizations and analyses were conducted on the data. These include a word vectorization model, a document-level sentiment analysis model, and an explanation of said sentiment analysis model.
 
 \subsection{Word Vectorization}
-Word vectorization models were trained on the data for each search term for each decade. This allows for the visualization of not only the most similar words to a given word in that snapshot, but also how the clusters of words shift over time. For example, figures \ref{1980tsne} and \ref{2010tsne} below show the tsne plots for selected words using the ``disab'' search term from the 1980s and 2010s, respectively.
 
-\begin{figure}[h]
-\centering
-% \includegraphics[width=0.5\textwidth]{1980s.png}
-1980s t-SNE plot goes here.
-\caption{t-SNE plot of the word vectorization model using the ``disab'' search term from the 1980s.} \label{1980tsne}
+Word vectorization models were trained on the data for each search term for each decade. This allows for the visualization of not only the most similar words to a given word in that snapshot, but also how the clusters of words shift over time. For example, figures \ref{tsnea} and \ref{tsneb} show the tsne plots for selected words using the ``disab'' search term from the 1990s and 2020s, respectively.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{lemma_disab_1990_simword.png}
+  \caption{\label{tsnea} t-SNE plot of the word vectorization model using the ``disab'' search term from the 1990s.}
+  
+\end{figure}
+  
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{lemma_disab_2020_simword.png}
+  \caption{\label{tsneb} t-SNE plot of the word vectorization model using the ``disab'' search term from the 2020s.}
+  
 \end{figure}
 
-\begin{figure}[h]
-\centering
-% \includegraphics[width=0.5\textwidth]{2010s.png}
-2010s t-SNE plot goes here.
-\caption{t-SNE plot of the word vectorization model using the ``disab'' search term from the 2010s.} \label{2010tsne}
+\subsection{Word Cloud}
+
+Word clouds for each term and decade were generated using the word frequencies from the pre-processed data. These word clouds give a visual representation of the most common words in the data. For example, figures \ref{wca} and \ref{wcb} shows the word cloud for the ``disab'' search term from the 1990s and 2020s.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{lemma_disab_1990_wordcloud.png}
+  \caption{\label{wca} Word cloud of the word frequencies for the ``disab'' search term from the 1990s.}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{lemma_disab_2020_wordcloud.png}
+  \caption{\label{wcb} Word cloud of the word frequencies for the ``disab'' search term from the 2020s.}
 \end{figure}
 
 \section{Discussion}
-Discussion goes here.
+As alluded to in our approach, the goal of this project was to create a tool that can be used by other researchers to conduct analyses on disability-related terminology and beyond. As such, the discussion of specific points of interest is outside the scope of this project. However, the results of the analyses shown above represent just the tip of the iceberg of what can be done with this data and these models. The word vectorization model, for example, can be used to track the evolution of disability-related terminology over time. The sentiment analysis model can be used to track the sentiment of news articles over time. The word cloud can be used to track the most common words in news articles over time. The possibilities are endless.
+
+Furthermore, despite the name of this project, the general idea can be easily extended into other areas simply by using different search terms. For example, one could use the same pipeline to track the evolution of sentiment towards mass transit and transit-oriented development. 
 
 \section{Conclusion}
 Due to the short turn-around time of the project, avenues for future work are plentiful. These include a more centralized system for creating the analyses, a more robust sentiment analysis model, and a deeper review of these analyses from a critical disability studies and sociological perspective.
+
+\bibliography{report}
+\bibliographystyle{acl_natbib}
 
 \end{document}
