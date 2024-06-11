@@ -7,7 +7,7 @@ from striprtf.striprtf import rtf_to_text
 from tqdm import tqdm
 
 from metadata_parser import proc_meta
-from token_cleaning import clean_text, lemma_warn
+from token_cleaning import clean_text
 
 
 def proc_rtf(path: Path) -> dict:
