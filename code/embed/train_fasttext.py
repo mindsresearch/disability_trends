@@ -15,7 +15,7 @@ from gensim.models import FastText
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--term', default='disab', type=str)
 parser.add_argument('-d', '--decade', type=str, required=True)
-args = parser.parse_args(['-t', 'handicap', '-d', '2020'])
+args = parser.parse_args(['-t', 'disab', '-d', '1990'])
 term = args.term
 decade = args.decade
 # json_paths = list(Path(f'/run/media/noah/TOSHIBA EXT/disab_trends_corp/{term}/{decade}s/json').glob('*.json'))

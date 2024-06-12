@@ -9,7 +9,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--term', default='disab', type=str)
     parser.add_argument('-d', '--decade', type=str, required=True)
-    args = parser.parse_args(['-t', 'handicap', '-d', '2020'])
+    args = parser.parse_args(['-t', 'disab', '-d', '1990'])
     term = args.term
     decade = args.decade
     script_loc = Path(__file__).resolve()
@@ -30,4 +30,5 @@ if __name__ == '__main__':
     plt.imshow(wc, interpolation='bilinear')
     plt.title(f'{term} wordcloud for {decade}s')
     plt.axis("off")
+    plt.tight_layout()
     plt.show()
