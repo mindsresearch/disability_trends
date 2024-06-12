@@ -81,7 +81,7 @@ Another such visual representation of the data after pre-processing was a word c
 \textbf{BRADY}: In this section, discuss the sentiment analysis model. Include the model architecture, training data, and training results. For example, ``TensorFlow was used to train a sentiment analysis model similar to the one proposed in this paper. It uses an RNN trained on this dataset, and achives an average accuracy of $x$\%.''
 
 \subsection{Interpretable Sentiment Analysis}
-\textbf{RAGHAV}: In this section, discuss the interpretations of the sentiment analysis model. For example, how does Alibi work for generating those colors?
+We chose the Alibi library and the integrated gradients method to create interpretations. Integrated grardietns define and attribution value foro each word in the input. Attributions are calcuclated using the integral of hte model gradients with respect ot he word embedding layer along a straight path from a base line instance to the input instance. To do othis, we take the model, a sambple of the data, and an index of words to compare frequencies and setiment against. We use this to create a visualization. The visualiation is based on the what has the highest positive attribution. Words with high positive attribution are highlighted in shades of green and words with negative attributions in shades of pink. Positive attributions can be interpreted as increase in probability of the predicted class (``positive sentiment'') while negative attributions correspond to decrease probability of the predicted class.
 
 \section{Results}
 Multiple visualizations and analyses were conducted on the data. These include a word vectorization model, a document-level sentiment analysis model, and an explanation of said sentiment analysis model.
